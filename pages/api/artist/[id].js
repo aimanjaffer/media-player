@@ -11,7 +11,7 @@ async function getArtistById(req,res){
     try {
         let { db } = await connectToDatabase();
         let artist = await db
-                    .collection('artist')
+                    .collection('artists')
                     .findOne({_id : new ObjectId(req.query.id)});
         return res.json({
             message: JSON.parse(JSON.stringify(artist)),
