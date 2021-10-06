@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Home from '../components/home'
 import Login from '../components/login'
-import clientPromise from '../lib/mongodb'
 export default function Index({ isConnected }) {
   return (
     <div>
@@ -15,18 +14,4 @@ export default function Index({ isConnected }) {
       <Home/>
     </div>
   )
-}
-export async function getServerSideProps(context) {
-  let isConnected;
-  try {
-    const client = await clientPromise
-    isConnected = true;
-  } catch(e) {
-    console.log(e);
-    isConnected = false;
-  }
-
-  return {
-    props: { isConnected },
-  }
 }
