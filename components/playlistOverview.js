@@ -9,6 +9,7 @@ export default function PlaylistOverview(props){
             </div>
             <div className="flex-grow flex-col">
                 <div className="flex-none mt-2 mb-4 text-xl">{props.name}</div>
+                {/**TODO: make dynamic */}
                 <div className="flex-none">Created By</div>
             </div>
             <div className="flex-col items-stretch mr-4 mt-2">
