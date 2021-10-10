@@ -2,8 +2,8 @@ import Track from "./track";
 export default function GenreDetail(props){
     return (
         <>
-        <button onClick={() => dispatch({type: 'home'})}>Back</button>
-        <div>Genre Name</div>
+        <button className="text-white text-xl pb-1" onClick={() => props.dispatch({type: 'explore'})}>Back</button>
+        <div className="text-white text-3xl pb-1">Genre Name</div>
         <div>Playlists</div>
         <div>Albums</div>
         <div>Top Tracks

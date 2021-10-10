@@ -32,9 +32,7 @@ export default function DefaultHome(props){
             </div>
             <div className="text-white text-3xl pb-1">Discover</div>
             <div className="grid grid-cols-4 gap-4 pb-5">
-                <AlbumOverview/>
-                <AlbumOverview/>
-                <AlbumOverview/>
+                {props.user && props.user?.likedAlbums?.map(item => <AlbumOverview key={item._id} id={item._id} name={item.name} artistName={item.artistName} dispatch={props.dispatch}/>)}
             </div>
             </>);
 }

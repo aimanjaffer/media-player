@@ -10,7 +10,6 @@ export default function Track(props){
                 <div>Album Name</div>
                 <div>{props.artistName}</div>
             </div>
-            {/**Show on hover */}
             <div className="flex-col items-stretch mr-4 mt-2">
                 <div className="invisible mb-8 group-hover:visible group-hover:self-start">
                     <button>Play</button>

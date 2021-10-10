@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import Track from './track';
+import Image from 'next/image';
 const fetcher = (url) => fetch(url).then((res) => res.json()).then(res => res.message);
 export default function AlbumDetail(props){
     const album = useSWR(`/api/album/${props.id}`, fetcher);
@@ -15,10 +16,12 @@ export default function AlbumDetail(props){
         console.log(tracks.data); */
     return (
         <>
-        <button onClick={() => props.dispatch({type: 'home'})}>Back</button>
-        <div>Cover Art</div>
-        <div>{album?.data?.name}</div>
-        <div>{artist && artist?.data?.name}</div>
+        <button className="text-white text-xl pb-1" onClick={() => props.dispatch({type: 'home'})}>Back</button>
+        <div className="flex-initial pt-2 pb-2 mr-4">
+            <Image className="rounded-lg border-4 drop-shadow-lg" src="/mjbad.jpg" height="200" width="200" />
+        </div>
+        <div className="text-white text-3xl pb-1">{album?.data?.name}</div>
+        <div className="text-white text-2xl pb-1">{artist && artist?.data?.name}</div>
         <button>Play</button>
         <button>Like/Unlike</button>
         <div>Track List

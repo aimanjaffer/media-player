@@ -66,9 +66,10 @@ export default function Home(props){
     <div className="grid grid-cols-10 h-full">
     <div className="bg-gray-800 col-span-1 text-white">
         <div className="flex flex-col gap-5">
-        <button onClick={() => dispatch({type: 'search'})} className="rounded-lg hover:bg-green-900">Search</button>
-        <button onClick={() => dispatch({type: 'explore'})} className="rounded-lg hover:bg-green-900">Explore</button>
-        <button className="rounded-lg hover:bg-green-900">Create Playlist</button>
+            <button onClick={() => dispatch({type: 'home'})} className="rounded-lg hover:bg-gray-700">Home</button>
+            <button onClick={() => dispatch({type: 'search'})} className="rounded-lg hover:bg-gray-700">Search</button>
+            <button onClick={() => dispatch({type: 'explore'})} className="rounded-lg hover:bg-gray-700">Explore</button>
+            <button className="rounded-lg hover:bg-gray-700">Create Playlist</button>
         </div>
     </div>
 
