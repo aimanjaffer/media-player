@@ -1,10 +1,8 @@
-import { useRouter } from 'next/router'
-export default function GenreDetail(){
-    const router = useRouter();
-    const { id } = router.query;
+import Track from "./track";
+export default function GenreDetail(props){
     return (
         <>
-        <button onClick={() => router.back()}>Back</button>
+        <button onClick={() => dispatch({type: 'home'})}>Back</button>
         <div>Genre Name</div>
         <div>Playlists</div>
         <div>Albums</div>

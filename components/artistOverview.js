@@ -1,9 +1,7 @@
 import Image from 'next/image'
-import Link from 'next/link'
 export default function ArtistOverview(props){
     return (
-        <Link href={`/artist/${props.id}`}>
-        <div className="group rounded-lg bg-green-800 hover:bg-green-700 hover:drop-shadow-lg text-white flex">
+        <div onClick={() => props.dispatch({type: 'artist', payload: props.id})} className="group rounded-lg bg-green-800 hover:bg-green-700 hover:drop-shadow-lg text-white flex">
             <div className="flex-initial p-2 mr-4">
                 <Image className="rounded-lg border-4 drop-shadow-lg" src="/mjbad.jpg" height="80" width="80" />
             </div>
@@ -19,6 +17,5 @@ export default function ArtistOverview(props){
                 </div>
             </div>
         </div>
-        </Link>
     );
 }

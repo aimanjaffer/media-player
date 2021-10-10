@@ -1,11 +1,7 @@
 import Image from 'next/image'
-import Link from 'next/link'
 export default function AlbumOverview(props){
     return (
-        <Link href={`/album/${props.id}`}>
-        <div className="group rounded-lg bg-gray-800 hover:bg-gray-700 hover:drop-shadow-lg text-white flex">
-           
-            
+        <div onClick={() => props.dispatch({type: 'album', payload: props.id})} className="group rounded-lg bg-gray-800 hover:bg-gray-700 hover:drop-shadow-lg text-white flex">
             <div className="flex-initial p-2 mr-4">
                 <Image className="rounded-lg border-4 drop-shadow-lg" src="/mjbad.jpg" height="80" width="80" />
             </div>
@@ -24,6 +20,5 @@ export default function AlbumOverview(props){
                 </div>
             </div>
         </div>
-        </Link>
     );
 }

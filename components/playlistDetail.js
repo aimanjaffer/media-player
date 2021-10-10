@@ -1,10 +1,7 @@
-import { useRouter } from 'next/router'
-export default function PlaylistDetail(){
-    const router = useRouter();
-    const { id } = router.query;
+export default function PlaylistDetail(props){
     return (
         <>
-        <button onClick={() => router.back()}>Back</button>
+        <button onClick={() => props.dispatch({type: 'home'})}>Back</button>
         <div>Cover Art</div>
         <div>Playlist Name</div>
         <div>Created by</div>

@@ -1,10 +1,8 @@
-import { useRouter } from 'next/router'
-export default function ArtistDetail(){
-    const router = useRouter();
-    const { id } = router.query;
+import Track from "./track";
+export default function ArtistDetail(props){
     return(
     <>
-    <button onClick={() => router.back()}>Back</button>
+    <button onClick={() => props.dispatch({type: 'home'})}>Back</button>
     <div>Profile Photo</div>
     <div>Artist Name</div>
     <div>Bio</div>
