@@ -1,7 +1,11 @@
 import Image from 'next/image'
 export default function Track(props){
+    const likeTrack = (e) => {
+        e.stopPropagation();
+        console.log("like track clicked");
+    }
     return (
-        <div className="group rounded-lg bg-blue-800 hover:bg-blue-700 hover:drop-shadow-lg text-white flex">
+        <div onClick={() => props.dispatch({type: 'playTrack', payload: props.id})} className="cursor-pointer group rounded-lg bg-blue-800 hover:bg-blue-700 hover:drop-shadow-lg text-white flex mb-2">
             <div className="flex-initial p-2 mr-4">
                 <Image className="rounded-lg border-4 drop-shadow-lg" src="/mjbad.jpg" height="80" width="80" />
             </div>
@@ -11,11 +15,8 @@ export default function Track(props){
                 <div>{props.artistName}</div>
             </div>
             <div className="flex-col items-stretch mr-4 mt-2">
-                <div className="invisible mb-8 group-hover:visible group-hover:self-start">
-                    <button>Play</button>
-                </div>
                 <div className="invisible group-hover:visible group-hover:self-end">
-                    <button>Like</button>
+                    <button onClick={likeTrack}>Like</button>
                 </div>
             </div>
             

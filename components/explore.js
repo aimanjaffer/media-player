@@ -12,7 +12,7 @@ export default function Explore(props){
         fetch("api/genres")
         .then(response => response.json())
         .then(response => {
-            if(response.message){
+            if(response.success){
                 setGenres(response.message);
             }
                 

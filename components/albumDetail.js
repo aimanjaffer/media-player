@@ -25,7 +25,7 @@ export default function AlbumDetail(props){
         <button>Play</button>
         <button>Like/Unlike</button>
         <div>Track List
-            {tracks && tracks?.data?.map(item => <Track key={item._id} name={item.name} artistName={item.artistName}/>)}
+            {tracks && tracks?.data?.map(item => <Track key={item._id} id={item._id} name={item.name} artistName={item.artistName} dispatch={props.dispatch} />)}
         </div>
         </>
     );

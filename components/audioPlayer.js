@@ -1,34 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player'
 //Reference: https://www.npmjs.com/package/react-player
 export default function AudioPlayer(props){
-    const [playing, setPlaying] = useState(false);
-    const [url, setUrl] = useState('/Audiobinger_Death_Note.mp3');
-    /* 
-    const [volume, setVolume] = useState(0);
-    const [muted, setMuted] = useState(true);
-    const togglePlayPause = () => {
-        this.setPlaying((currentValue) => !currentValue );
-    }
-    const handleStop = () => {
-        setUrl(null);
-        setPlaying(false);
-    }
-    const handleVolumeChange = e => {
-        this.setVolume(parseFloat(e.target.value));
-    }
-    const handleToggleMuted = () => {
-        this.setMuted((currentValue) => !currentValue);
-    }
-    */
+    
+    const [url, setUrl] = useState('/song.mp3');
+    const [currentlyPlaying, setCurrentlyPlaying] = useState();
+    useEffect(() => {
+        fetch(`/api/track/${props.trackId}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.success){
+                setUrl(response.message.url);
+                setCurrentlyPlaying(response.message.name);
+            }
+        })
+    },[props.trackId]);
+
     return (
     <>
         <ReactPlayer url={url}
-         playing={playing}
+         playing={props.playing}
          controls={true}
          height='50px'
          width='100%'
+         onPause={() => props.dispatch({type: 'pause'})}
+         onPlay={() => props.dispatch({type: 'play'})}
          />
+         {currentlyPlaying && <div className="text-xl">Currently Playing: {currentlyPlaying}</div>}
     </>
     );
 }

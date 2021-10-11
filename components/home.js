@@ -13,19 +13,25 @@ const initialState = {
 function reducer(state, action){
      switch(action.type){
         case 'home':
-            return { view: 'home'}
+            return {...state, view: 'home'}
         case 'explore':
-            return {view: 'explore'}
+            return {...state, view: 'explore'}
         case 'search':
-            return {view: 'search'}
+            return {...state, view: 'search'}
         case 'album':
-            return {view: 'album', albumId: action.payload}
+            return {...state, view: 'album', albumId: action.payload}
         case 'artist':
-            return {view: 'artist', artistId: action.payload}
+            return {...state, view: 'artist', artistId: action.payload}
         case 'playlist':
-            return {view: 'playlist', playlistId: action.payload}
+            return {...state, view: 'playlist', playlistId: action.payload}
         case 'genre':
-            return {view: 'genre', genreId: action.payload}
+            return {...state, view: 'genre', genreId: action.payload}
+        case 'playTrack':
+            return {...state, trackId: action.payload, playing: true}
+        case 'pause':
+            return {...state, playing: false}
+        case 'play':
+            return {...state, playing: true}
     }
     return state; 
 }
@@ -37,7 +43,7 @@ export default function Home(props){
             fetch(`/api/user/email/${props.user.email}`)
             .then(response => response.json())
             .then(response => {
-                if(response.message)
+                if(response.success)
                     setUser(response.message);
                 else{
                     let body = {
@@ -54,7 +60,7 @@ export default function Home(props){
                         fetch(`/api/user/${response.message.insertedId}`)
                         .then(response => response.json())
                         .then(response => {
-                            if(response.message)
+                            if(response.successs)
                                 setUser(response.message);
                         });
                     });
@@ -83,7 +89,7 @@ export default function Home(props){
     {state.view === 'genre' && <GenreDetail id={state.genreId} dispatch={dispatch}/>}
     </div>
     <div className="absolute inset-x-10 bottom-10">
-        <AudioPlayer/>
+        <AudioPlayer trackId={state.trackId} playing={state.playing} dispatch={dispatch}/>
     </div>
     </div>
     );

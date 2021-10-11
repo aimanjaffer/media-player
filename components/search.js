@@ -16,7 +16,7 @@ export default function Search(props){
             .then(response => response.json())
             .then(response => {
                 console.log(response);
-                if(response.message)
+                if(response.success)
                     setSearchResults(response.message);
             });
         }else{
