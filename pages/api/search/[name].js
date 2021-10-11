@@ -10,7 +10,7 @@ async function searchByName(req, res){
     try {
         let { db } = await connectToDatabase();
         let searchRegex = new RegExp(".*"+req.query.name+".*");
-        console.log(searchRegex);
+        //console.log(searchRegex);
         let albums = await db
                     .collection('albums')
                     .find({ name: { $regex: searchRegex, '$options' : 'i' } })

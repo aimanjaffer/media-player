@@ -28,6 +28,14 @@ function reducer(state, action){
             return {...state, view: 'genre', genreId: action.payload}
         case 'playTrack':
             return {...state, trackId: action.payload, playing: true}
+        //TODO Start
+        case 'playAlbum':
+            return {...state, albumId: action.payload, playing: true}
+        case 'playPlaylist':
+            return {...state, playlistId: action.payload, playing: true}
+        case 'playArtist':
+            return {...state, artistId: action.payload, playing: true}
+        //TODO End
         case 'pause':
             return {...state, playing: false}
         case 'play':
@@ -69,8 +77,9 @@ export default function Home(props){
         }
     },[props.user]);
     return (
-    <div className="grid grid-cols-10 h-full">
-    <div className="bg-gray-800 col-span-1 text-white">
+    <>
+    <div className="grid grid-cols-10 overflow-hidden h-screen">
+    <div className="bg-gray-800 col-span-1 text-white text-xl">
         <div className="flex flex-col gap-5">
             <button onClick={() => dispatch({type: 'home'})} className="rounded-lg hover:bg-gray-700">Home</button>
             <button onClick={() => dispatch({type: 'search'})} className="rounded-lg hover:bg-gray-700">Search</button>
@@ -79,18 +88,19 @@ export default function Home(props){
         </div>
     </div>
 
-    <div className="col-span-9 bg-gray-900 pl-5">
-    {state.view === 'explore' && <Explore dispatch={dispatch}/>}
-    {state.view === 'search' && <Search dispatch={dispatch}/>}
+    <div className="col-span-9 bg-gray-900 pl-5 overflow-y-scroll">
+    {state.view === 'explore' && <Explore user={user} dispatch={dispatch}/>}
+    {state.view === 'search' && <Search user={user} dispatch={dispatch}/>}
     {state.view === 'home' && <DefaultHome user={user} dispatch={dispatch}/>}
-    {state.view === 'album' && <AlbumDetail id={state.albumId} dispatch={dispatch}/>}
-    {state.view === 'artist' && <ArtistDetail id={state.artistId} dispatch={dispatch}/>}
-    {state.view === 'playlist' && <PlaylistDetail id={state.playlistId} dispatch={dispatch}/>}
-    {state.view === 'genre' && <GenreDetail id={state.genreId} dispatch={dispatch}/>}
+    {state.view === 'album' && <AlbumDetail id={state.albumId} user={user} dispatch={dispatch}/>}
+    {state.view === 'artist' && <ArtistDetail id={state.artistId} user={user} dispatch={dispatch}/>}
+    {state.view === 'playlist' && <PlaylistDetail id={state.playlistId} user={user} dispatch={dispatch}/>}
+    {state.view === 'genre' && <GenreDetail id={state.genreId} user={user} dispatch={dispatch}/>}
     </div>
-    <div className="absolute inset-x-10 bottom-10">
+    </div>
+    <div className="absolute inset-x-10 bottom-5">
         <AudioPlayer trackId={state.trackId} playing={state.playing} dispatch={dispatch}/>
     </div>
-    </div>
+    </>
     );
 }

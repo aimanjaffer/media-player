@@ -8,12 +8,6 @@ export default function AlbumDetail(props){
     const tracks = useSWR(`/api/tracks/albumId/${props.id}`, fetcher);
     if (album.error) return <div>Failed to load Album</div>
     if (!album.data) return <div>Loading Album...</div>
-    /* if(album.data) 
-        console.log(album.data);
-    if(artist.data) 
-        console.log(artist.data);
-    if(tracks.data) 
-        console.log(tracks.data); */
     return (
         <>
         <button className="text-white text-xl pb-1" onClick={() => props.dispatch({type: 'home'})}>Back</button>
@@ -25,7 +19,14 @@ export default function AlbumDetail(props){
         <button>Play</button>
         <button>Like/Unlike</button>
         <div>Track List
-            {tracks && tracks?.data?.map(item => <Track key={item._id} id={item._id} name={item.name} artistName={item.artistName} dispatch={props.dispatch} />)}
+            {tracks && tracks?.data?.map(item => <Track key={item._id} 
+                                                        id={item._id} 
+                                                        name={item.name} 
+                                                        artistName={item.artistName} 
+                                                        artistId={album.data.artistId} 
+                                                        albumId={props.id} 
+                                                        dispatch={props.dispatch} 
+                                                        user={props.user} />)}
         </div>
         </>
     );
