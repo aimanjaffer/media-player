@@ -26,11 +26,11 @@ export default function DefaultHome(props){
                 if(item.type === 'album')
                     return <AlbumOverview key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} dispatch={props.dispatch}/>
                 if(item.type === 'track')
-                    return <Track key={item._id} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} albumId={item.albumId} dispatch={props.dispatch} user={props.user}/>
+                    return <Track key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} albumId={item.albumId} dispatch={props.dispatch} user={props.user}/>
                 if(item.type === 'artist')
-                    return <ArtistOverview key={item._id} id={item._id} name={item.name} dispatch={props.dispatch}/>
+                    return <ArtistOverview key={item._id} user={props.user} id={item._id} name={item.name} dispatch={props.dispatch}/>
                 if(item.type === 'playlist')
-                    return <PlaylistOverview key={item._id} id={item._id} name={item.name} dispatch={props.dispatch}/>
+                    return <PlaylistOverview key={item._id} user={props.user} id={item._id} name={item.name} dispatch={props.dispatch}/>
                 })}
             </div>
             <div className="text-white text-3xl pb-1">Liked Albums</div>
@@ -50,15 +50,15 @@ export default function DefaultHome(props){
             </div>
             <div className="text-white text-3xl pb-1">Liked Artists</div>
             <div className="grid grid-cols-4 gap-4 pb-5">
-                {props.user && props.user?.likedArtists?.map(item => <ArtistOverview key={item._id} id={item._id} name={item.name} dispatch={props.dispatch}/>)}
+                {props.user && props.user?.likedArtists?.map(item => <ArtistOverview key={item._id} user={props.user} id={item._id} name={item.name} dispatch={props.dispatch}/>)}
             </div>
             <div className="text-white text-3xl">Your Playlists</div>
             <div className="grid grid-cols-4 gap-4 pb-5">
-                {props.user && props.user?.playlists?.map(item => <PlaylistOverview key={item._id} id={item._id} name={item.name} dispatch={props.dispatch}/>)}
+                {props.user && props.user?.playlists?.map(item => <PlaylistOverview key={item._id} user={props.user} id={item._id} name={item.name} dispatch={props.dispatch}/>)}
             </div>
             <div className="text-white text-3xl pb-1">Discover</div>
             <div className="grid grid-cols-4 gap-4 pb-5">
-                {allAlbums && allAlbums.map(item => <AlbumOverview key={item._id} id={item._id} user={props.user} name={item.name} artistName={item.artistName} artistId={item.artistId} dispatch={props.dispatch}/>)}
+                {allAlbums && allAlbums.map(item => <AlbumOverview key={item._id} id={item._id} user={props.user} user={props.user} name={item.name} artistName={item.artistName} artistId={item.artistId} dispatch={props.dispatch}/>)}
             </div>
             </>);
 }

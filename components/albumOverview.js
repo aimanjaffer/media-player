@@ -2,6 +2,11 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react';
 export default function AlbumOverview(props){
     const [trackIds, setTrackIds] = useState();
+    const [liked, setLiked] = useState();
+    useEffect(()=>{
+        if(props.user && (props.user?.likedAlbums?.filter(album => album._id === props.id).length > 0))
+            setLiked(true);
+    },[props.user]);
     useEffect(()=>{
         fetch(`/api/tracks/albumId/${props.id}`)
         .then(response => response.json())
@@ -12,6 +17,29 @@ export default function AlbumOverview(props){
             }
         })
     },[props.id]);
+    const unlikeAlbum = (e) => {
+        e.stopPropagation();
+        console.log("unlike album button clicked");
+        let body = {
+            userId: props.user._id,
+            album: {
+                name: props.name,
+                artistName: props.artistName,
+                _id: props.id,
+                artistId: props.artistId
+            }
+        };
+        let options = {
+            method: "POST",
+            body: JSON.stringify(body)
+        }
+        fetch('/api/user/unlikeAlbum', options)
+        .then(response => response.json())
+        .then(response => {
+            if(response.success)
+                setLiked(false);
+        });
+    };
     const likeAlbum = (e) => {
         e.stopPropagation();
         console.log("like album button clicked");
@@ -68,7 +96,8 @@ export default function AlbumOverview(props){
                     <button onClick={playAlbum}>Play</button>
                 </div>
                 <div className="invisible group-hover:visible group-hover:self-end">
-                    <button onClick={likeAlbum}>Like</button>
+                {!liked && <button onClick={likeAlbum}>Like</button>}
+                {liked && <button onClick={unlikeAlbum}>Unlike</button>}
                 </div>
             </div>
         </div>

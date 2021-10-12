@@ -49,7 +49,7 @@ export default function AudioPlayer(props){
                 </button>
              </div>
             <div className="flex-item">
-                {currentlyPlayingName && <p className="text-l text-white">Currently Playing: {currentlyPlayingName}</p>}
+                {currentlyPlayingName && <p className="text-l text-white">Now Playing: {currentlyPlayingName}</p>}
             </div>
             <div className="flex-item">
                 <button className="text-white text-l" onClick={() => props.dispatch({type: 'nextTrack', payload: (props.currentIndex + 1) % tracks.length })}>
