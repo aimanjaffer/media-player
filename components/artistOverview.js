@@ -1,5 +1,17 @@
-import Image from 'next/image'
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 export default function ArtistOverview(props){
+    const [trackIds, setTrackIds] = useState();
+    useEffect(()=>{
+        fetch(`/api/tracks/artistId/${props.id}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.success){
+                let ids = response.message.map(track => track._id);
+                setTrackIds(ids);
+            }
+        })
+    },[props.id]);
     const likeArtist = (e) => {
         e.stopPropagation();
         console.log("like artist button clicked");
@@ -36,8 +48,7 @@ export default function ArtistOverview(props){
         fetch('/api/user/recentlyPlayed', options)
         .then(response => response.json())
         .then(console.log);
-        //TODO: get all tracks by the Artist and send an object containing array of trackIds and index to play from via the reducer
-        props.dispatch({type: 'playArtist', payload: props.id});
+        props.dispatch({type: 'playArtist', payload: {trackIds: trackIds, currentIndex: 0}});
     }
     return (
         <div onClick={() => props.dispatch({type: 'artist', payload: props.id})} className="group rounded-lg bg-green-800 hover:bg-green-700 hover:drop-shadow-lg text-white flex">

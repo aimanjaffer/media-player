@@ -1,5 +1,17 @@
 import Image from 'next/image'
+import { useEffect, useState } from 'react';
 export default function AlbumOverview(props){
+    const [trackIds, setTrackIds] = useState();
+    useEffect(()=>{
+        fetch(`/api/tracks/albumId/${props.id}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.success){
+                let ids = response.message.map(track => track._id);
+                setTrackIds(ids);
+            }
+        })
+    },[props.id]);
     const likeAlbum = (e) => {
         e.stopPropagation();
         console.log("like album button clicked");
@@ -40,8 +52,7 @@ export default function AlbumOverview(props){
         fetch('/api/user/recentlyPlayed', options)
         .then(response => response.json())
         .then(console.log);
-        //TODO: get all tracks in the Album and send an array of trackIds via the reducer 
-        props.dispatch({type: 'playAlbum', payload: props.id});
+        props.dispatch({type: 'playAlbum', payload: {trackIds: trackIds, currentIndex: 0}});
     }
     return (
         <div onClick={() => props.dispatch({type: 'album', payload: props.id})} className="cursor-pointer group rounded-lg bg-gray-800 hover:bg-gray-700 hover:drop-shadow-lg text-white flex mb-2">

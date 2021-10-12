@@ -28,14 +28,14 @@ function reducer(state, action){
             return {...state, view: 'genre', genreId: action.payload}
         case 'playTrack':
             return {...state, trackIds: action.payload.trackIds, currentIndex: action.payload.currentIndex, playing: true}
-        //TODO Start
         case 'playAlbum':
-            return {...state, albumId: action.payload, playing: true}
+            return {...state, trackIds: action.payload.trackIds, currentIndex: action.payload.currentIndex, playing: true}
+        //TODO Start
         case 'playPlaylist':
             return {...state, playlistId: action.payload, playing: true}
-        case 'playArtist':
-            return {...state, artistId: action.payload, playing: true}
         //TODO End
+        case 'playArtist':
+            return {...state, trackIds: action.payload.trackIds, currentIndex: action.payload.currentIndex, playing: true}
         case 'nextTrack':
             return {...state, currentIndex: action.payload}
         case 'previousTrack':
