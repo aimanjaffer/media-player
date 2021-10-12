@@ -42,7 +42,7 @@ export default function Track(props){
         fetch('/api/user/recentlyPlayed', options)
         .then(response => response.json())
         .then(console.log);
-        props.dispatch({type: 'playTrack', payload: props.id});
+        props.dispatch({type: 'playTrack', payload: {trackIds: [props.id], currentIndex: 0}});
     }
     return (
         <div onClick={playTrack} className="cursor-pointer group rounded-lg bg-blue-800 hover:bg-blue-700 hover:drop-shadow-lg text-white flex mb-2">

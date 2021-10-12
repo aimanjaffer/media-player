@@ -40,7 +40,7 @@ export default function AlbumOverview(props){
         fetch('/api/user/recentlyPlayed', options)
         .then(response => response.json())
         .then(console.log);
-        //TODO: get all tracks in the Album and send an array of trackIds via the reducer, playing an individual track will be the same but array will have only on trackId 
+        //TODO: get all tracks in the Album and send an array of trackIds via the reducer 
         props.dispatch({type: 'playAlbum', payload: props.id});
     }
     return (

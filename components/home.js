@@ -27,7 +27,7 @@ function reducer(state, action){
         case 'genre':
             return {...state, view: 'genre', genreId: action.payload}
         case 'playTrack':
-            return {...state, trackId: action.payload, playing: true}
+            return {...state, trackIds: action.payload.trackIds, currentIndex: action.payload.currentIndex, playing: true}
         //TODO Start
         case 'playAlbum':
             return {...state, albumId: action.payload, playing: true}
@@ -36,6 +36,10 @@ function reducer(state, action){
         case 'playArtist':
             return {...state, artistId: action.payload, playing: true}
         //TODO End
+        case 'nextTrack':
+            return {...state, currentIndex: action.payload}
+        case 'previousTrack':
+            return {...state, currentIndex: action.payload}
         case 'pause':
             return {...state, playing: false}
         case 'play':
@@ -99,7 +103,7 @@ export default function Home(props){
     </div>
     </div>
     <div className="absolute inset-x-10 bottom-5">
-        <AudioPlayer trackId={state.trackId} playing={state.playing} dispatch={dispatch}/>
+        <AudioPlayer trackIds={state.trackIds} currentIndex={state.currentIndex} playing={state.playing} dispatch={dispatch}/>
     </div>
     </>
     );

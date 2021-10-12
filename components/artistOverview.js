@@ -36,7 +36,7 @@ export default function ArtistOverview(props){
         fetch('/api/user/recentlyPlayed', options)
         .then(response => response.json())
         .then(console.log);
-        //TODO: get all tracks by the Artist and send an object containing array of trackIds and index to play from via the reducer, playing an individual track will be the same but array will have only one trackId
+        //TODO: get all tracks by the Artist and send an object containing array of trackIds and index to play from via the reducer
         props.dispatch({type: 'playArtist', payload: props.id});
     }
     return (
