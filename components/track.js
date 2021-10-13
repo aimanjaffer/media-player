@@ -2,6 +2,18 @@ import Image from 'next/image'
 import {useState, useEffect} from 'react';
 export default function Track(props){
     const [liked, setLiked] = useState();
+    const [albumName, setAlbumName] = useState();
+    useEffect(()=>{
+        if(props.albumId){
+            fetch(`/api/album/${props.albumId}`)
+            .then(response => response.json())
+            .then(response => {
+                if(response.success && response.message){
+                    setAlbumName(response.message.name);
+                }
+            })
+        }
+    },[props.albumId])
     useEffect(()=>{
         if(props.user && (props.user?.likedSongs?.filter(song => song._id === props.id).length > 0))
             setLiked(true);
@@ -86,7 +98,7 @@ export default function Track(props){
             </div>
             <div className="flex-grow flex-col">
                 <div className="flex-none mt-2 mb-4 text-xl">{props.name}</div>
-                <div>Album Name</div>
+                <div>{albumName}</div>
                 <div>{props.artistName}</div>
             </div>
             <div className="flex-col items-stretch mr-4 mt-2">

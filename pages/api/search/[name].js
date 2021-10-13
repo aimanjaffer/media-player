@@ -27,6 +27,18 @@ async function searchByName(req, res){
                     .collection('playlists')
                     .find({ name: { $regex: searchRegex, '$options' : 'i' } })
                     .toArray();
+        albums = albums.map(album => {
+            return {...album, type: 'album'}
+        });
+        tracks = tracks.map(track => {
+            return {...track, type: 'track'}
+        });
+        artists = artists.map(artist => {
+            return {...artist, type: 'artist'}
+        });
+        playlists = playlists.map(playlist => {
+            return {...playlist, type: 'playlist'}
+        });
         let results = [...albums, ...artists, ...tracks, ...playlists];        
         return res.json({
             message: JSON.parse(JSON.stringify(results)),
