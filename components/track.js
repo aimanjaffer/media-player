@@ -103,8 +103,8 @@ export default function Track(props){
             </div>
             <div className="flex-col items-stretch mr-4 mt-2">
                 <div className="invisible group-hover:visible group-hover:self-end">
-                    {!liked && <button onClick={likeTrack}>Like</button>}
-                    {liked && <button onClick={unlikeTrack}>Unlike</button>}
+                    {!liked && <button className="rounded-lg hover:bg-blue-800 p-1" onClick={likeTrack}>Like</button>}
+                    {liked && <button className="rounded-lg hover:bg-blue-800 p-1" onClick={unlikeTrack}>Unlike</button>}
                 </div>
             </div>
             

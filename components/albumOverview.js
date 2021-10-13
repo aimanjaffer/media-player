@@ -58,7 +58,10 @@ export default function AlbumOverview(props){
         }
         fetch('/api/user/likeAlbum', options)
         .then(response => response.json())
-        .then(console.log);
+        .then(response => {
+            if(response.success)
+                setLiked(true);
+        });
     };
     const playAlbum = (e) => {
         e.stopPropagation();
@@ -93,11 +96,11 @@ export default function AlbumOverview(props){
             </div>
             <div className="flex-col items-stretch mr-4 mt-2">
                 <div className="invisible mb-8 group-hover:visible group-hover:self-start">
-                    <button onClick={playAlbum}>Play</button>
+                    <button className="rounded-lg hover:bg-gray-800 p-1" onClick={playAlbum}>Play</button>
                 </div>
                 <div className="invisible group-hover:visible group-hover:self-end">
-                {!liked && <button onClick={likeAlbum}>Like</button>}
-                {liked && <button onClick={unlikeAlbum}>Unlike</button>}
+                {!liked && <button className="rounded-lg hover:bg-gray-800 p-1" onClick={likeAlbum}>Like</button>}
+                {liked && <button className="rounded-lg hover:bg-gray-800 p-1" onClick={unlikeAlbum}>Unlike</button>}
                 </div>
             </div>
         </div>

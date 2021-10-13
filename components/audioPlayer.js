@@ -32,7 +32,7 @@ export default function AudioPlayer(props){
     }, [props.currentIndex, tracks]);
     
     return (
-    <div>
+    <>
         <ReactPlayer url={currentlyPlayingUrl}
          playing={props.playing}
          controls={true}
@@ -42,9 +42,10 @@ export default function AudioPlayer(props){
          onPlay={() => props.dispatch({type: 'play'})}
          onEnded={() => props.dispatch({type: 'nextTrack', payload: (props.currentIndex + 1) % tracks.length })}
          />
-         <div className="bg-green-900 rounded-lg flex flex-row flex-wrap justify-between z-10">
+         <div className="grid justify-center justify-items-stretch">
+         <div className="bg-green-900 rounded-lg flex flex-row flex-wrap justify-evenly z-10 gap-10 pl-2 pr-2">
              <div className="flex-item">
-                <button className="text-white text-l" onClick={() => props.dispatch({type: 'previousTrack', payload: (props.currentIndex + tracks.length - 1) % tracks.length })}>
+                <button className="text-white text-l rounded-lg hover:bg-green-700 pl-2 pr-2" onClick={() => props.dispatch({type: 'previousTrack', payload: (props.currentIndex + tracks.length - 1) % tracks.length })}>
                 Previous Track
                 </button>
              </div>
@@ -52,11 +53,13 @@ export default function AudioPlayer(props){
                 {currentlyPlayingName && <p className="text-l text-white">Now Playing: {currentlyPlayingName}</p>}
             </div>
             <div className="flex-item">
-                <button className="text-white text-l" onClick={() => props.dispatch({type: 'nextTrack', payload: (props.currentIndex + 1) % tracks.length })}>
+                <button className="text-white text-l rounded-lg hover:bg-green-700 pl-2 pr-2" onClick={() => props.dispatch({type: 'nextTrack', payload: (props.currentIndex + 1) % tracks.length })}>
                 Next Track
                 </button>
             </div>
          </div>
-    </div>
+         </div>
+         
+    </>
     );
 }

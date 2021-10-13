@@ -54,7 +54,10 @@ export default function ArtistOverview(props){
         }
         fetch('/api/user/likeArtist', options)
         .then(response => response.json())
-        .then(console.log);
+        .then(response => {
+            if(response.success)
+                setLiked(true);
+        });
     };
     const playArtist = (e) => {
         e.stopPropagation();
@@ -86,11 +89,11 @@ export default function ArtistOverview(props){
             </div>
             <div className="flex-col items-stretch mr-4 mt-2">
                 <div className="invisible mb-8 group-hover:visible group-hover:self-start">
-                    <button onClick={playArtist}>Play</button>
+                    <button className="rounded-lg hover:bg-green-800 p-1" onClick={playArtist}>Play</button>
                 </div>
                 <div className="invisible group-hover:visible group-hover:self-end">
-                    {!liked && <button onClick={likeArtist}>Like</button>}
-                    {liked && <button onClick={unlikeArtist}>Unlike</button>}
+                    {!liked && <button className="rounded-lg hover:bg-green-800 p-1" onClick={likeArtist}>Like</button>}
+                    {liked && <button className="rounded-lg hover:bg-green-800 p-1" onClick={unlikeArtist}>Unlike</button>}
                 </div>
             </div>
         </div>
