@@ -38,10 +38,14 @@ export default function GenreDetail(props){
         {/*<div>Playlists</div>*/}
         {(albums.length > 0) && <div className="text-white text-2xl pb-1">All Albums</div>}
         {(albums.length < 1) && <div className="text-white text-2xl pb-1">No Albums Available</div>}
-        {albums && albums.map(item => <AlbumOverview key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} dispatch={props.dispatch}/>)}
+        <div className="pr-10">
+            {albums && albums.map(item => <AlbumOverview key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} dispatch={props.dispatch}/>)}
+        </div>
         {(tracks.length > 0) && <div className="text-white text-2xl pb-1">All Tracks</div>}
         {(tracks.length < 1) && <div className="text-white text-2xl pb-1">No Tracks Available</div>}
-        {tracks && tracks.map(item => <Track key={item._id} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} albumId={item.albumId} dispatch={props.dispatch} user={props.user} />)}
+        <div className="pr-10">
+            {tracks && tracks.map(item => <Track key={item._id} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} albumId={item.albumId} dispatch={props.dispatch} user={props.user} />)}
+        </div>
         </>
     );
 }

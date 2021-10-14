@@ -1,12 +1,14 @@
 import Track from "./track";
 import Image from 'next/image';
 import useSWR from 'swr';
+import AlbumOverview from './albumOverview';
 import { useEffect, useState } from 'react';
 const fetcher = (url) => fetch(url).then((res) => res.json()).then(res => res.message);
 export default function ArtistDetail(props){
     const [trackIds, setTrackIds] = useState();
     const artist = useSWR(`/api/artist/${props.id}`, fetcher);
     const tracks = useSWR(`/api/tracks/artistId/${props.id}`, fetcher);
+    const [albums, setAlbums] = useState([]);
     const [liked, setLiked] = useState();
     useEffect(()=>{
         if(props.user && (props.user?.likedArtists?.filter(artist => artist._id === props.id).length > 0))
@@ -20,7 +22,13 @@ export default function ArtistDetail(props){
                 let ids = response.message.map(track => track._id);
                 setTrackIds(ids);
             }
-        })
+        });
+        fetch(`/api/albums/artistId/${props.id}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.success)
+                setAlbums(response.message);
+        });
     },[props.id]);
     const unlikeArtist = (e) => {
         e.stopPropagation();
@@ -100,9 +108,14 @@ export default function ArtistDetail(props){
                 {!liked && <button className="rounded-lg hover:bg-gray-700 p-2" onClick={likeArtist}>Like Artist</button>}
                 {liked && <button className="rounded-lg hover:bg-gray-700 p-2"onClick={unlikeArtist}>Unlike Artist</button>}
             </div>
-        </div>
-        {(tracks?.data?.length > 0) && <div className="text-white text-2xl pb-1">All Discography</div>}
-        {((tracks?.data?.length < 1)||(tracks.error)) && <div className="text-white text-2xl pb-1">No Tracks Available</div>}
+    </div>
+    {(albums.length > 0) && <div className="text-white text-2xl pb-1">All Albums</div>}
+    {(albums.length < 1) && <div className="text-white text-2xl pb-1">No Albums Available</div>}
+    <div className="pr-10">
+        {albums && albums.map(item => <AlbumOverview key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} dispatch={props.dispatch}/>)}
+    </div>
+    {(tracks?.data?.length > 0) && <div className="text-white text-2xl pb-1">All Discography</div>}
+    {((tracks?.data?.length < 1)||(tracks.error)) && <div className="text-white text-2xl pb-1">No Tracks Available</div>}
         <div className="pr-10">
             {tracks && tracks?.data?.map(item => <Track key={item._id} 
                                                         id={item._id} 
