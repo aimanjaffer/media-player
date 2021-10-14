@@ -39,13 +39,13 @@ export default function Search(props){
     </form>
     {(searchResults.length > 0) && searchResults.map(item => {
         if(item.type === 'album')
-            return <AlbumOverview key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} dispatch={props.dispatch}/>
+            return <AlbumOverview key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} dispatch={props.dispatch} userState={props.userState} userDispatch={props.userDispatch}/>
         if(item.type === 'track')
-            return <Track key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} albumId={item.albumId} dispatch={props.dispatch}/>
+            return <Track key={item._id} user={props.user} id={item._id} name={item.name} artistName={item.artistName} artistId={item.artistId} albumId={item.albumId} dispatch={props.dispatch} userState={props.userState} userDispatch={props.userDispatch}/>
         if(item.type === 'artist')
-            return <ArtistOverview key={item._id} user={props.user} id={item._id} name={item.name} dispatch={props.dispatch}/>
+            return <ArtistOverview key={item._id} user={props.user} id={item._id} name={item.name} dispatch={props.dispatch} userState={props.userState} userDispatch={props.userDispatch}/>
         if(item.type === 'playlist')
-            return <PlaylistOverview key={item._id} user={props.user} id={item._id} name={item.name} dispatch={props.dispatch}/>
+            return <PlaylistOverview key={item._id} user={props.user} id={item._id} name={item.name} dispatch={props.dispatch} userState={props.userState} userDispatch={props.userDispatch}/>
     })}
     </>
     );

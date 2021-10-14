@@ -22,7 +22,7 @@ export default function Explore(props){
     <>
         <button className="text-white text-xl pb-1" onClick={() => props.dispatch({type: 'home'})}>Back</button>
         <p className="text-white text-3xl pb-2">Explore</p>
-        {genres && genres.map(genre => <GenreOverview key={genre._id} id={genre._id} name={genre.name} dispatch={props.dispatch} /> )}
+        {genres && genres.map(genre => <GenreOverview key={genre._id} id={genre._id} name={genre.name} dispatch={props.dispatch} userState={props.userState} userDispatch={props.userDispatch}/> )}
     </>
     );
 }

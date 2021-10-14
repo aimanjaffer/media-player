@@ -17,9 +17,9 @@ export default function AlbumDetail(props){
         })
     },[props.id]);
     useEffect(()=>{
-        if(props.user && (props.user?.likedAlbums?.filter(album => album._id === props.id).length > 0))
+        if(props.userState && (props.userState.likedAlbums?.filter(album => album._id === props.id).length > 0))
             setLiked(true);
-    },[props.user]);
+    },[props.userState]);
     const album = useSWR(`/api/album/${props.id}`, fetcher);
     const artist = useSWR(album.data ? `/api/artist/${album.data.artistId}` : null, fetcher);
     const tracks = useSWR(`/api/tracks/albumId/${props.id}`, fetcher);
@@ -42,8 +42,13 @@ export default function AlbumDetail(props){
         fetch('/api/user/unlikeAlbum', options)
         .then(response => response.json())
         .then(response => {
-            if(response.success)
+            if(response.success){
                 setLiked(false);
+                let likedAlbumsNew = props.userState.likedAlbums.filter(item => item._id !== body.album._id);
+                //console.log(likedAlbumsNew);
+                props.userDispatch({type: 'setLikedAlbums', payload: likedAlbumsNew});
+            }
+                
         });
     };
     const likeAlbum = (e) => {
@@ -65,8 +70,11 @@ export default function AlbumDetail(props){
         fetch('/api/user/likeAlbum', options)
         .then(response => response.json())
         .then(response => {
-            if(response.success)
+            if(response.success){
                 setLiked(true);
+                props.userDispatch({type: 'setLikedAlbums', payload: [...props.userState.likedAlbums, body.album]});
+            }
+                
         });
     };
     const playAlbum = (e) => {
@@ -88,7 +96,16 @@ export default function AlbumDetail(props){
         }
         fetch('/api/user/recentlyPlayed', options)
         .then(response => response.json())
-        .then(console.log);
+        .then(response => {
+            if(response.success){
+                fetch(`/api/user/${props.user._id}`)
+                .then(response => response.json())
+                .then(response => {
+                    if(response.success)
+                    props.userDispatch({type:'setRecentlyPlayed', payload: response.message.recentlyPlayed});
+                });
+            }
+        });
         props.dispatch({type: 'playAlbum', payload: {trackIds: trackIds, currentIndex: 0}});
     }
     if (album.error) return <div>Failed to load Album</div>
@@ -121,7 +138,10 @@ export default function AlbumDetail(props){
                                                         artistId={album.data.artistId} 
                                                         albumId={props.id} 
                                                         dispatch={props.dispatch} 
-                                                        user={props.user} />)}
+                                                        user={props.user} 
+                                                        userState={props.userState} 
+                                                        userDispatch={props.userDispatch}
+                                                        />)}
         </div>
         </>
     );

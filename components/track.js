@@ -15,9 +15,9 @@ export default function Track(props){
         }
     },[props.albumId])
     useEffect(()=>{
-        if(props.user && (props.user?.likedSongs?.filter(song => song._id === props.id).length > 0))
+        if(props.userState && (props.userState.likedSongs?.filter(song => song._id === props.id).length > 0))
             setLiked(true);
-    },[props.user]);
+    },[props.userState]);
     
     const unlikeTrack = (e) => {
         e.stopPropagation();
@@ -39,8 +39,13 @@ export default function Track(props){
         fetch('/api/user/unlikeTrack', options)
         .then(response => response.json())
         .then(response => {
-            if(response.success)
+            if(response.success){
                 setLiked(false);
+                let likedSongsNew = props.userState.likedSongs.filter(item => item._id !== body.track._id);
+                //console.log(likedSongsNew);
+                props.userDispatch({type: 'setLikedSongs', payload: likedSongsNew});
+            }
+                
         });
     }
 
@@ -64,13 +69,16 @@ export default function Track(props){
         fetch('/api/user/likeTrack', options)
         .then(response => response.json())
         .then(response => {
-            if(response.success)
+            if(response.success){
                 setLiked(true);
+                props.userDispatch({type: 'setLikedSongs', payload: [...props.userState.likedSongs, body.track]});
+            }  
         });
     }
 
     const playTrack = (e) => {
         console.log("play track");
+        e.stopPropagation();
         let body = {
             userId: props.user._id,
             type: "track",
@@ -88,7 +96,16 @@ export default function Track(props){
         }
         fetch('/api/user/recentlyPlayed', options)
         .then(response => response.json())
-        .then(console.log);
+        .then(response => {
+            if(response.success){
+                fetch(`/api/user/${props.user._id}`)
+                .then(response => response.json())
+                .then(response => {
+                    if(response.success)
+                    props.userDispatch({type:'setRecentlyPlayed', payload: response.message.recentlyPlayed});
+                });
+            }
+        });
         props.dispatch({type: 'playTrack', payload: {trackIds: [props.id], currentIndex: 0}});
     }
     return (

@@ -10,6 +10,25 @@ import GenreDetail from "./genreDetail";
 const initialState = {
     view: "home"
 };
+const userInitialState = {
+    likedAlbums: [],
+    likedArtists: [],
+    likedSongs: [],
+    recentlyPlayed: []
+}
+
+function userReducer(state, action){
+    switch(action.type){
+        case 'setLikedAlbums':
+            return {...state, likedAlbums: action.payload};
+        case 'setLikedArtists':
+            return {...state, likedArtists: action.payload};
+        case 'setLikedSongs':
+            return {...state, likedSongs: action.payload};
+        case 'setRecentlyPlayed':
+            return {...state, recentlyPlayed: action.payload};
+    }
+}
 function reducer(state, action){
      switch(action.type){
         case 'home':
@@ -49,7 +68,16 @@ function reducer(state, action){
 }
 export default function Home(props){
     const [user, setUser] = useState({});
+    const [userState, userDispatch] = useReducer(userReducer, userInitialState);
     const [state, dispatch] = useReducer(reducer, initialState);
+    useEffect(() => {
+        if(user){
+            userDispatch({type:'setLikedAlbums', payload: user.likedAlbums});
+            userDispatch({type:'setLikedArtists', payload: user.likedArtists});
+            userDispatch({type:'setLikedSongs', payload: user.likedSongs});
+            userDispatch({type:'setRecentlyPlayed', payload: user.recentlyPlayed});
+        }
+    },[user]);
     useEffect(() => {
         if(props.user.email){
             fetch(`/api/user/email/${props.user.email}`)
@@ -93,17 +121,17 @@ export default function Home(props){
     </div>
 
     <div className="col-span-9 bg-gray-900 pl-5 overflow-y-scroll">
-    {state.view === 'explore' && <Explore user={user} dispatch={dispatch}/>}
-    {state.view === 'search' && <Search user={user} dispatch={dispatch}/>}
-    {state.view === 'home' && <DefaultHome user={user} dispatch={dispatch}/>}
-    {state.view === 'album' && <AlbumDetail id={state.albumId} user={user} dispatch={dispatch}/>}
-    {state.view === 'artist' && <ArtistDetail id={state.artistId} user={user} dispatch={dispatch}/>}
-    {state.view === 'playlist' && <PlaylistDetail id={state.playlistId} user={user} dispatch={dispatch}/>}
-    {state.view === 'genre' && <GenreDetail id={state.genreId} user={user} dispatch={dispatch}/>}
+    {state.view === 'explore' && <Explore user={user} dispatch={dispatch} userState={userState} userDispatch={userDispatch}/>}
+    {state.view === 'search' && <Search user={user} dispatch={dispatch} userState={userState} userDispatch={userDispatch}/>}
+    {state.view === 'home' && <DefaultHome user={user} dispatch={dispatch} userState={userState} userDispatch={userDispatch}/>}
+    {state.view === 'album' && <AlbumDetail id={state.albumId} user={user} dispatch={dispatch} userState={userState} userDispatch={userDispatch}/>}
+    {state.view === 'artist' && <ArtistDetail id={state.artistId} user={user} dispatch={dispatch} userState={userState} userDispatch={userDispatch}/>}
+    {state.view === 'playlist' && <PlaylistDetail id={state.playlistId} user={user} dispatch={dispatch} userState={userState} userDispatch={userDispatch}/>}
+    {state.view === 'genre' && <GenreDetail id={state.genreId} user={user} dispatch={dispatch} userState={userState} userDispatch={userDispatch}/>}
     </div>
     </div>
     <div className="absolute inset-x-10 bottom-5">
-        <AudioPlayer trackIds={state.trackIds} currentIndex={state.currentIndex} playing={state.playing} dispatch={dispatch}/>
+        <AudioPlayer trackIds={state.trackIds} currentIndex={state.currentIndex} playing={state.playing} dispatch={dispatch} userState={userState} userDispatch={userDispatch}/>
     </div>
     </>
     );
