@@ -43,9 +43,9 @@ export default function AudioPlayer(props){
          onEnded={() => props.dispatch({type: 'nextTrack', payload: (props.currentIndex + 1) % tracks.length })}
          />
          <div className="grid justify-center justify-items-stretch">
-         <div className="bg-green-900 rounded-lg flex flex-row flex-wrap justify-evenly z-10 gap-10 pl-2 pr-2">
+         <div className="bg-black rounded-lg flex flex-row flex-wrap justify-evenly z-10 gap-10 pl-2 pr-2">
              <div className="flex-item">
-                <button className="text-white text-l rounded-lg hover:bg-green-700 pl-2 pr-2" onClick={() => props.dispatch({type: 'previousTrack', payload: (props.currentIndex + tracks.length - 1) % tracks.length })}>
+                <button className="text-white text-l rounded-lg hover:bg-gray-700 pl-2 pr-2" onClick={() => props.dispatch({type: 'previousTrack', payload: (props.currentIndex + tracks.length - 1) % tracks.length })}>
                 Previous Track
                 </button>
              </div>
@@ -53,7 +53,7 @@ export default function AudioPlayer(props){
                 {currentlyPlayingName && <p className="text-l text-white">Now Playing: {currentlyPlayingName}</p>}
             </div>
             <div className="flex-item">
-                <button className="text-white text-l rounded-lg hover:bg-green-700 pl-2 pr-2" onClick={() => props.dispatch({type: 'nextTrack', payload: (props.currentIndex + 1) % tracks.length })}>
+                <button className="text-white text-l rounded-lg hover:bg-gray-700 pl-2 pr-2" onClick={() => props.dispatch({type: 'nextTrack', payload: (props.currentIndex + 1) % tracks.length })}>
                 Next Track
                 </button>
             </div>
