@@ -14,10 +14,19 @@ async function getUserByEmail(req,res){
         let user = await db
                     .collection('users')
                     .findOne({email : req.query.email});
-        return res.json({
-            message: JSON.parse(JSON.stringify(user)),
-            success: true,
-        });
+        console.log("user is: ", user);
+        if(user){
+            return res.json({
+                message: JSON.parse(JSON.stringify(user)),
+                success: true,
+            });
+        }else{
+            return res.json({
+                message: "User not found",
+                success: false,
+            });
+        }
+        
     } catch (error) {
         return res.json({
             message: new Error(error).message,
@@ -33,6 +42,7 @@ async function createUserFromEmail(req,res){
         let user = await db
                     .collection('users')
                     .insertOne({email : body.email, name: body.name});
+        console.log(user);
         return res.json({
             message: JSON.parse(JSON.stringify(user)),
             success: true,

@@ -80,11 +80,14 @@ export default function Home(props){
     },[user]);
     useEffect(() => {
         if(props.user.email){
+            console.log(props.user.email);
             fetch(`/api/user/email/${props.user.email}`)
             .then(response => response.json())
             .then(response => {
-                if(response.success)
+                if(response.success){
                     setUser(response.message);
+                    //console.log("response message: ",response.message);
+                } 
                 else{
                     let body = {
                         email: props.user.email,
@@ -94,13 +97,13 @@ export default function Home(props){
                         method: 'POST',
                         body: JSON.stringify(body)
                     };
-                    fetch('/api/user/email/', options)
+                    fetch('/api/user/email', options)
                     .then(response => response.json())
                     .then(response => {
                         fetch(`/api/user/${response.message.insertedId}`)
                         .then(response => response.json())
                         .then(response => {
-                            if(response.successs)
+                            if(response.success)
                                 setUser(response.message);
                         });
                     });

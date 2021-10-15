@@ -12,7 +12,13 @@ async function createUserFromEmail(req,res){
         let { db } = await connectToDatabase();
         let user = await db
                     .collection('users')
-                    .insertOne({email : body.email, name: body.name});
+                    .insertOne({email : body.email,
+                                name: body.name,
+                                recentlyPlayed: [],
+                                likedSongs: [],
+                                likedAlbums: [],
+                                likedArtists: []});
+        //console.log(user);
         return res.json({
             message: JSON.parse(JSON.stringify(user)),
             success: true,

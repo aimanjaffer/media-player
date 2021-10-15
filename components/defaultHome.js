@@ -18,7 +18,7 @@ export default function DefaultHome(props){
             <div className="absolute top-5 right-5">
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={signOut}>Sign out</button>
             </div>
-            <div className="text-white text-5xl pb-5">Hey {props.user.name}</div>
+            <div className="text-white text-5xl pb-5">Hey {props.user?.name}</div>
             <div className="text-white text-3xl pb-1">Recently Played</div>
             
             <div className="grid grid-cols-4 gap-4 pb-5">
