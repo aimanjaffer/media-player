@@ -10,7 +10,7 @@ export default function GenreDetail(props){
         fetch(`/api/genre/${props.id}`)
         .then(response => response.json())
         .then(response => {
-            console.log(response);
+            //console.log(response);
             if(response.success)
                 setGenre(response.message);
         });

@@ -19,7 +19,7 @@ export default function ArtistOverview(props){
     },[props.id]);
     const unlikeArtist = (e) => {
         e.stopPropagation();
-        console.log("unlike artist button clicked");
+        //console.log("unlike artist button clicked");
         let body = {
             userId: props.user._id,
             artist: {
@@ -45,7 +45,7 @@ export default function ArtistOverview(props){
     };
     const likeArtist = (e) => {
         e.stopPropagation();
-        console.log("like artist button clicked");
+        //console.log("like artist button clicked");
         let body = {
             userId: props.user._id,
             artist: {
@@ -68,7 +68,7 @@ export default function ArtistOverview(props){
     };
     const playArtist = (e) => {
         e.stopPropagation();
-        console.log("play artist");
+        //console.log("play artist");
         let body = {
             userId: props.user._id,
             type: "artist",

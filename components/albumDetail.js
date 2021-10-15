@@ -26,7 +26,7 @@ export default function AlbumDetail(props){
     const tracks = useSWR(`/api/tracks/albumId/${props.id}`, fetcher);
     const unlikeAlbum = (e) => {
         e.stopPropagation();
-        console.log("unlike album button clicked");
+        //console.log("unlike album button clicked");
         let body = {
             userId: props.user._id,
             album: {
@@ -54,7 +54,7 @@ export default function AlbumDetail(props){
     };
     const likeAlbum = (e) => {
         e.stopPropagation();
-        console.log("like album button clicked");
+        //console.log("like album button clicked");
         let body = {
             userId: props.user._id,
             album: {
@@ -80,7 +80,7 @@ export default function AlbumDetail(props){
     };
     const playAlbum = (e) => {
         e.stopPropagation();
-        console.log("play album");
+        //console.log("play album");
         let body = {
             userId: props.user._id,
             type: "album",

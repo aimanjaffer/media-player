@@ -21,7 +21,7 @@ export default function Track(props){
     
     const unlikeTrack = (e) => {
         e.stopPropagation();
-        console.log("unlike track button clicked");
+        //console.log("unlike track button clicked");
         let body = {
             userId: props.user._id,
             track: {
@@ -51,7 +51,7 @@ export default function Track(props){
 
     const likeTrack = (e) => {
         e.stopPropagation();
-        console.log("like track button clicked");
+        //console.log("like track button clicked");
         let body = {
             userId: props.user._id,
             track: {
@@ -77,7 +77,7 @@ export default function Track(props){
     }
 
     const playTrack = (e) => {
-        console.log("play track");
+        //console.log("play track");
         e.stopPropagation();
         let body = {
             userId: props.user._id,

@@ -2,7 +2,7 @@ import Image from 'next/image'
 export default function PlaylistOverview(props){
     const playPlaylist = (e) => {
         e.stopPropagation();
-        console.log("play playlist");
+        //console.log("play playlist");
         let body = {
             userId: props.user._id,
             type: "playlist",

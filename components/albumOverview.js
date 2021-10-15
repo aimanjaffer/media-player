@@ -20,7 +20,7 @@ export default function AlbumOverview(props){
     },[props.id]);
     const unlikeAlbum = (e) => {
         e.stopPropagation();
-        console.log("unlike album button clicked");
+        //console.log("unlike album button clicked");
         let body = {
             userId: props.user._id,
             album: {

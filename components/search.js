@@ -18,7 +18,7 @@ export default function Search(props){
             fetch(`/api/search/${e.target.value}`)
             .then(response => response.json())
             .then(response => {
-                console.log(response);
+                //console.log(response);
                 if(response.success)
                     setSearchResults(response.message);
             });
