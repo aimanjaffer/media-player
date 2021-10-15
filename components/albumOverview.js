@@ -13,6 +13,7 @@ export default function AlbumOverview(props){
         .then(response => {
             if(response.success){
                 let ids = response.message.map(track => track._id);
+                //console.log(ids);
                 setTrackIds(ids);
             }
         })

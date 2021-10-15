@@ -13,6 +13,7 @@ async function getTracksByAlbumId(req,res){
         let tracks = await db
                     .collection('tracks')
                     .find({ albumId : new ObjectId(req.query.id) })
+                    .sort({ positionInAlbum : 1})
                     .toArray();
         return res.json({
             message: JSON.parse(JSON.stringify(tracks)),

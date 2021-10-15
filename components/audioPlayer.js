@@ -22,7 +22,10 @@ export default function AudioPlayer(props){
                     })
                 );
             }
-            Promise.all(promises).then(() => setTracks(localTracks));
+            Promise.all(promises).then(() => {
+                localTracks.sort((a, b) => a.positionInAlbum - b.positionInAlbum);
+                setTracks(localTracks)
+            });
         }
     }, [props.trackIds]);
 
